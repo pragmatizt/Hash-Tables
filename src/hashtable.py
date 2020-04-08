@@ -7,7 +7,7 @@ class LinkedPair:
         self.value = value
         self.next = None
     def __repr__(self):
-        return f"<{self.key}, {self.value}>"
+        return f"<{self.key}, {self.value}, {self.next}>"
 
 class HashTable:
     '''
@@ -61,7 +61,38 @@ class HashTable:
 
         # Check if a pair already exists in the bucket
         pair = self.storage[index]
-        if pair is not None:
+
+        # create functionality that goes through all elements
+
+        while pair is not None:    # If a pair exists
+            # If so, iterate through list 
+            # check if key value pair are duplicates (or just key)
+            if pair.key == key:
+                pair.value = value
+                print("testing1")
+                return
+
+            # Once we hit last node
+            if pair.next == None:
+                # Add a new node
+                pair.next = LinkedPair(key, value)
+                print("testing2")
+                return
+
+            # Traverse through list
+            pair = pair.next
+        
+            # If not, Create a new LinkedPair and place it in the bucket
+        self.storage[index] = LinkedPair(key, value)
+
+
+"""
+        # Hashmod the key to find the bucket
+        index = self._hash_mod(key)
+
+        # Check if a pair already exists in the bucket
+        pair = self.storage[index]
+        if pair is not None:    # If a pair exists
             # If so, overwrite the key/value and throw a warning
             if pair.key != key:
                 print("Warning: Overwriting value")
@@ -71,54 +102,55 @@ class HashTable:
             # If not, Create a new LinkedPair and place it in the bucket
             self.storage[index] = LinkedPair(key, value)
 
+"""
 
 
-    def remove(self, key):
-        '''
-        Remove the value stored with the given key.
+    # def remove(self, key):
+    #     '''
+    #     Remove the value stored with the given key.
 
-        Print a warning if the key is not found.
+    #     Print a warning if the key is not found.
 
-        Fill this in.
-        '''
-        index = self._hash_mod(key)
+    #     Fill this in.
+    #     '''
+    #     index = self._hash_mod(key)
 
-        # Check if a pair exists in the bucket with matching keys
-        if self.storage[index] is not None and self.storage[index].key == key:
-            # If so, remove that pair
-            self.storage[index] = None
-        else:
-            # Else print warning
-            print("Warning: Key does not exist")
+    #     # Check if a pair exists in the bucket with matching keys
+    #     if self.storage[index] is not None and self.storage[index].key == key:
+    #         # If so, remove that pair
+    #         self.storage[index] = None
+    #     else:
+    #         # Else print warning
+    #         print("Warning: Key does not exist")
 
-    def retrieve(self, key):
-        '''
-        Retrieve the value stored with the given key.
+    # def retrieve(self, key):
+    #     '''
+    #     Retrieve the value stored with the given key.
 
-        Returns None if the key is not found.
+    #     Returns None if the key is not found.
 
-        Fill this in.
-        '''
-        # Get the index from hashmod
-        index = self._hash_mod(key)
+    #     Fill this in.
+    #     '''
+    #     # Get the index from hashmod
+    #     index = self._hash_mod(key)
 
-        # Check if a pair exists in the bucket with matching keys
-        if self.storage[index] is not None and self.storage[index].key == key:
-            # If so, return the value
-            return self.storage[index].value
-        else:
-            # Else return None
-            return None
+    #     # Check if a pair exists in the bucket with matching keys
+    #     if self.storage[index] is not None and self.storage[index].key == key:
+    #         # If so, return the value
+    #         return self.storage[index].value
+    #     else:
+    #         # Else return None
+    #         return None
 
 
-    def resize(self):
-        '''
-        Doubles the capacity of the hash table and
-        rehash all key/value pairs.
+    # def resize(self):
+    #     '''
+    #     Doubles the capacity of the hash table and
+    #     rehash all key/value pairs.
 
-        Fill this in.
-        '''
-        pass
+    #     Fill this in.
+    #     '''
+    #     pass
 
 
 
@@ -126,15 +158,15 @@ if __name__ == "__main__":
     ht = HashTable(2)
 
     ht.insert("line_1", "Tiny hash table")
-    # ht.insert("line_2", "Filled beyond capacity")
-    # ht.insert("line_3", "Linked list saves the day!")
+    ht.insert("line_2", "Filled beyond capacity")
+    ht.insert("line_3", "Linked list saves the day!")
 
     print(ht.storage)
 
     print("")
 
     # Test storing beyond capacity
-    print(ht.retrieve("line_1"))
+    # print(ht.retrieve("line_1"))
     # print(ht.retrieve("line_2"))
     # print(ht.retrieve("line_3"))
 
@@ -151,3 +183,14 @@ if __name__ == "__main__":
     # print(ht.retrieve("line_3"))
 
     # print("")
+
+
+
+"""
+RESOURCES
+Hashing & Retrieval:
+http://www.serve.net/buz/Notes.1st.year/HTML/C6/rand.013.html
+Visualizing Hashing Tables:
+https://www.youtube.com/watch?v=KyUTuwz_b7Q
+
+"""
